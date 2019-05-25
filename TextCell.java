@@ -1,14 +1,13 @@
 public class TextCell extends Cell {
-   //Mehul Joshi
-   // AP CS A 
-   // TextCell.java
-   public boolean setValue (String exp) {
-      formula = exp;
-      value = getValue();
-      return true;
+	public TextCell(String expression) {
+		super.setExpression(expression);
+	}
+	
+	
+	public String toString() {
+      return getExpression().substring(1, getExpression().length() - 1);
+      
+
    }
-   
-   public String toString() {
-      return formula.substring(1, formula.length() - 1);
-   }
+
 }

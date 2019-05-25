@@ -1,61 +1,49 @@
-/**
- * Mehul Joshi
- * Period 1
- * AP CS A
- * Excel Engine
- **/
-import java.io.*;
 import java.util.*;
-
+import java.io.*;
 public class ExcelEngine extends ExcelBase {
-
-   public static void main(String args[]) {
-
+   public static void main (String[] args) {
       GridBase.grid = new Grid();
       ExcelEngine engine = new ExcelEngine();
-
+      
       engine.runInputLoop();
-
+   
+      
+   
    }
-
+   
    public String processCommand(String input) {
-      String result = null;
-      String[] tokens = input.split(" ");
-
-      if (input.equalsIgnoreCase("help"))
-         result = "This is your help";
-
-      if (tokens[0].equalsIgnoreCase("load"))
-         result = loadFromFile(tokens[1]);
-
-      if (result == null && GridBase.grid != null)
-         result = GridBase.grid.processCommand(input);
-
-      if (result == null)
-         result = "(" + input + ")" + " is Unhandled";
-
-      return result;
-
+	   if(input.contains("load"))
+		   return loadFile(input.split(" ")[1]);
+	   
+      return GridBase.grid.processCommand(input);
+   
    }
-
-   // loads the files and runs process Command on each one of the lines in the file
-   private String loadFromFile(String filename) {
-
-      String result = "File loaded successfully";
-      try {
-         Scanner Sc = new Scanner(new File(filename));
-         while (Sc.hasNextLine()) {
-            String text = Sc.nextLine();
-            
-            processCommand(text);
-         }
-         Sc.close();
-
-      } catch (FileNotFoundException e) {
-         result = "Could not find file: " + filename;
-      }
-
-      return result;
+   
+   public String help() {
+	return"";   
    }
+   
+   public String loadFile(String filename) {
+	   try {
+		   System.out.println(filename);
+		   Scanner fileScanner = new Scanner(new File(filename));
+		   String input = "";
+		   while(fileScanner.hasNextLine()) {
+			   input = fileScanner.nextLine();
+			   GridBase.grid.processCommand(input);
+		   }
+		   
+		   return "File loaded successfully";
+		   
+		   
+	   } catch(FileNotFoundException e) {
+		   return "That file cannot be found";
+	   }
+	   
+   }
+   
+   
+   
+   
 
 }
